@@ -7,6 +7,7 @@ cat token
 ./level09 test
 ./level09 0123
 vim /tmp/python.py
+token=$(/bin/cat token) && python /tmp/python2.py $token
 /tmp/python.py /token
 ```
 ### The Outputs
