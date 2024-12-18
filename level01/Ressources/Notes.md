@@ -29,10 +29,15 @@ cat /etc/passwd | grep flag01 > pswdflag01 # je stocke le mdp et le récupère d
 | alice             | x            | 1001 | 1001 | Alice Doe              | /home/alice             | /bin/bash        |
 **Un caractère x indique que le mot de passe est chiffré est stocké dans [le fichier /etc/shadow](https://www.malekal.com/quest-ce-que-etc-shadow-et-son-role/).**
 
+
 #### Output : 42hDRfypTqqnw
 
 #### Outil John the Ripper 
-.\john.exe –show passwordfile
-
+##### Installation :
+1. apt install john
+2. Download -> rockyou.txt
+3. add hash in file passwordfile
+4. john --wordlist=./rockyou.txt passwordfile
+5. john –show passwordfile
 
 ### Answer : abcdefg
