@@ -1,23 +1,40 @@
-# 11 Commande Injection
-
-*  _Lua_ est un langage de script libre
-
-Ce script implémente un serveur TCP simple qui demande à l'utilisateur un mot de passe. Il hache ce mot de passe avec SHA1 et compare le résultat avec un hachage prédéfini. Si le mot de passe est correct (c'est-à-dire que son hachage correspond à la valeur donnée), le serveur répond par un message de félicitations. Sinon, il répond par un message d'erreur.
-
+# Défi 10 TocTou **Time-Of-Check to Time-Of-Use**
 
 ### Commandes réalisées
-
 ```bash
-cat level11.lua
-nc localhost 5151
-`getflag > /tmp/answer`
-cat /tmp/answer
+ls -la
+cat token
+./level10 token
+touch /tmp/test
+./level10 /tmp/test test
 ```
+### The Outputs
+* SUID 
 
-### Injection à cause de la vulnérabilité
-La vulnérabilité réside dans l'utilisation de io.popen pour exécuter une commande shell avec le mot de passe (pass) directement injecté dans la ligne de commande.
+| Terme  | Signification                         | Détails                                                                                              |
+|--------|---------------------------------------|------------------------------------------------------------------------------------------------------|
+| SUID   | Set User ID                           | - Bit spécial dans les permissions des fichiers.                                                    |
+|        |                                       | - Si défini sur un fichier exécutable, le programme s'exécute avec les privilèges du propriétaire.   |
+|        |                                       | - Ex. : `passwd` (pour changer les mots de passe, nécessite des privilèges root).                   |
+| UID    | User ID                               | - Identifiant unique d'un utilisateur dans le système.                                              |
+|        |                                       | - Associé à chaque compte utilisateur dans `/etc/passwd`.                                           |
+|        |                                       | - Utilisé pour déterminer les permissions sur des fichiers et ressources.                           |
+| GID    | Group ID                              | - Identifiant unique d'un groupe d'utilisateurs.                                                    |
+|        |                                       | - Associé à des groupes définis dans `/etc/group`.                                                  |
+|        |                                       | - Permet de gérer des permissions partagées pour des utilisateurs appartenant au même groupe.       |
 
-`prog = io.popen("echo "..pass.." | sha1sum", "r")`
+* Connection **via le port 6969**
 
+###  Toctou Exploit
+* Ouvrir 3 Terminal avec chaque programme et les lancer un par un
+#### tcp_server.py
+* créer un serveur tcp qui écoute sur le port 6969
+#### toctou.sh 
+* alterne les liens symboliques vers le token et un autre fichier avec les droits
+#### exec.sh 
+* execute le programme en boucle
 
-### Answer : fa6v5ateaw21peobuub8ipe6s
+##### Lancer les 3 programmes avec les deux derniers juste quelques secondes
+
+Password flag09 : woupa2yuojeeaaed06riuj63c
+### Answer : feulo4b72j7edeahuete3no7c
